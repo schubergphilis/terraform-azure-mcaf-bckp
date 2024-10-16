@@ -1,19 +1,19 @@
 variable "resource_group" {
-  description = "Resource Group"
+  description = "Resource Group (Required)"
   type = object({
-    name     = string
-    location = string
+    name     = string # Resource Group Name (Required)
+    location = string # Resource Group Location (Required)
   })
 }
 
 variable "azurerm_recovery_services_vault" {
-  description = "Recovery Services Vault"
+  description = "Recovery Services Vault (Optional)"
   type = object({
-    name                          = string
-    location                      = string
-    sku                           = string
-    soft_delete_enabled           = bool
-    public_network_access_enabled = bool
+    name                          = string # Vault Name (Required)
+    location                      = string # Vault Location (Optional, defaults to resource_group.location)
+    sku                           = string # SKU (Optional, defaults to 'standard')
+    soft_delete_enabled           = bool   # Soft Delete Enabled (Optional, defaults to true)
+    public_network_access_enabled = bool   # Public Network Access Enabled (Optional, defaults to false)
   })
   default = {
     location                      = var.resource_group.location
@@ -23,16 +23,36 @@ variable "azurerm_recovery_services_vault" {
   }
 }
 
-variable "storage_account" {
-  description = "Storage Account"
+variable "deploy_backup_policy_vm" {
+  description = "Deploy Backup Policy VM (Required)"
+  type        = bool # Deploy Backup Policy VM (Required)
+}
+
+variable "backup_policy_vm" {
+  description = "Backup Policy VM (Required)"
   type = object({
-    name                          = string
-    location                      = string
-    access_tier                   = string
-    account_tier                  = string
-    account_replication_type      = string
-    min_tls_version               = string
-    public_network_access_enabled = bool
+    timezone                 = string # Timezone (Required)
+    runtime                  = string # Runtime (Required)
+    retention_daily_count    = number # Retention Daily Count (Required)
+    retention_weekly_count   = number # Retention Weekly Count (Required)
+    retention_weekly_weekday = string # Retention Weekly Weekday (Required)
+    retention_monthly_count  = number # Retention Monthly Count (Required)
+    retention_monthly_weeks  = string # Retention Monthly Weeks (Required)
+    retention_yearly_count   = number # Retention Yearly Count (Required)
+    retention_yearly_months  = string # Retention Yearly Months (Required)
+  })
+}
+
+variable "storage_account" {
+  description = "Storage Account (Optional)"
+  type = object({
+    name                          = string # Storage Account Name (Required)
+    location                      = string # Storage Account Location (Optional, defaults to resource_group.location)
+    access_tier                   = string # Access Tier (Required)
+    account_tier                  = string # Account Tier (Required)
+    account_replication_type      = string # Account Replication Type (Required)
+    min_tls_version               = string # Minimum TLS Version (Optional, defaults to '1.2')
+    public_network_access_enabled = bool   # Public Network Access Enabled (Optional, defaults to false)
   })
   default = {
     location                      = var.resource_group.location
@@ -42,25 +62,25 @@ variable "storage_account" {
 }
 
 variable "recovery_services_vault_pe" {
-  description = "Recovery Services Vault Private Endpoint"
+  description = "Recovery Services Vault Private Endpoint (Optional)"
   type = object({
-    name      = string
-    location  = string
-    subnet_id = string
+    name      = string # Private Endpoint Name (Required)
+    location  = string # Private Endpoint Location (Optional, defaults to resource_group.location)
+    subnet_id = string # Subnet ID (Required)
   })
   default = {
-    location  = var.resource_group.location
+    location = var.resource_group.location
   }
 }
 
 variable "storage_account_pe" {
-  description = "Storage Account Private Endpoint"
+  description = "Storage Account Private Endpoint (Optional)"
   type = object({
-    name      = string
-    location  = string
-    subnet_id = string
+    name      = string # Private Endpoint Name (Required)
+    location  = string # Private Endpoint Location (Optional, defaults to resource_group.location)
+    subnet_id = string # Subnet ID (Required)
   })
   default = {
-    location  = var.resource_group.location
+    location = var.resource_group.location
   }
 }

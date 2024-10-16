@@ -6,6 +6,10 @@ output "azurerm_recovery_services_vault_id" {
   value = azurerm_recovery_services_vault.vault.id
 }
 
+output "azurerm_backup_policy_vm_id" {
+  value = azurerm_backup_policy_vm.vmbackuppolicy[0].id
+}
+
 output "azurerm_storage_account_id" {
   value = azurerm_storage_account.sa.id
 }
