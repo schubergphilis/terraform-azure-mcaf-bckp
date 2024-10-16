@@ -7,7 +7,7 @@ output "azurerm_recovery_services_vault_id" {
 }
 
 output "azurerm_backup_policy_vm_id" {
-  value = azurerm_backup_policy_vm.vmbackuppolicy[0].id
+  value = length(azurerm_backup_policy_vm.vmbackuppolicy) > 0 ? azurerm_backup_policy_vm.vmbackuppolicy[0].id : null
 }
 
 output "azurerm_storage_account_id" {

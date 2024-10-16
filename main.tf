@@ -20,7 +20,7 @@ resource "azurerm_storage_account" "sa" {
   account_tier                  = var.storage_account.account_tier
   account_replication_type      = var.storage_account.account_replication_type
   account_kind                  = "StorageV2"
-  min_tls_version               = "tls1_2"
+  min_tls_version               = "TLS1_2"
   public_network_access_enabled = false
 }
 
@@ -32,24 +32,31 @@ resource "azurerm_backup_policy_vm" "vmbackuppolicy" {
   timezone            = var.backup_policy_vm.timezone
   backup {
     frequency = "Daily"
-    time      = var.backup_policy_vm.runtime
+    time      = var.backup_policy_vm.time
   }
+
   retention_daily {
     count = var.backup_policy_vm.retention_daily_count
   }
+
   retention_weekly {
     count    = var.backup_policy_vm.retention_weekly_count
     weekdays = var.backup_policy_vm.retention_weekly_weekday
   }
+
   retention_monthly {
-    count = var.backup_policy_vm.retention_monthly_count
-    weeks = var.backup_policy_vm.retention_monthly_weeks
+    count    = var.backup_policy_vm.retention_monthly_count
+    weekdays = var.backup_policy_vm.retention_monthly_weekdays
+    weeks    = var.backup_policy_vm.retention_monthly_weeks
   }
   retention_yearly {
-    count  = var.backup_policy_vm.retention_yearly_count
-    months = var.backup_policy_vm.retention_yearly_months
+    count    = var.backup_policy_vm.retention_yearly_count
+    weekdays = var.backup_policy_vm.retention_yearly_weekdays
+    weeks    = var.backup_policy_vm.retention_yearly_weeks
+    months   = var.backup_policy_vm.retention_yearly_months
   }
 }
+
 
 resource "azurerm_private_endpoint" "recovery_services_vault_pe" {
   name                = "${var.vault.name}-pe"

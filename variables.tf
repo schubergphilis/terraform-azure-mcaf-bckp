@@ -1,65 +1,68 @@
+# Boolean variable to determine if the backup policy for VMs should be deployed
 variable "deploy_backup_policy_vm" {
-  description = "Deploy Backup Policy VM (Required)"
-  type        = bool # Set to true (Deploy) or false (don't deploy) (Required)
+  type = bool
 }
 
+# Object variable to define the resource group details
 variable "resource_group" {
-  description = "Resource Group (Required)"
   type = object({
-    name     = string # Resource Group Name (Required)
-    location = string # Resource Group Location (Required)
+    name     = string # Name of the resource group
+    location = string # Location of the resource group
   })
 }
 
-variable "azurerm_recovery_services_vault" {
-  description = "Recovery Services Vault (Optional)"
+# Object variable to define the vault details
+variable "vault" {
   type = object({
-    name     = string # Vault Name (Required)
-    location = string # Vault Location (Optional, defaults to resource_group.location)
-    sku      = string # SKU (Optional, defaults to 'standard')
+    name     = string # Name of the vault
+    location = string # Location of the vault
+    sku      = string # SKU (pricing tier) of the vault
   })
 }
 
+# Object variable to define the backup policy for VMs
 variable "backup_policy_vm" {
-  description = "Backup Policy VM (Required)"
   type = object({
-    timezone                 = string # Timezone (Required)
-    runtime                  = string # Runtime (Required)
-    retention_daily_count    = number # Retention Daily Count (Required)
-    retention_weekly_count   = number # Retention Weekly Count (Required)
-    retention_weekly_weekday = string # Retention Weekly Weekday (Required)
-    retention_monthly_count  = number # Retention Monthly Count (Required)
-    retention_monthly_weeks  = string # Retention Monthly Weeks (Required)
-    retention_yearly_count   = number # Retention Yearly Count (Required)
-    retention_yearly_months  = string # Retention Yearly Months (Required)
+    timezone                   = string       # Timezone for the backup policy
+    time                       = string       # Set the time you want the backup to run
+    retention_daily_count      = number       # Number of daily backups to retain
+    retention_weekly_count     = number       # Number of weekly backups to retain
+    retention_weekly_weekday   = list(string) # List of weekdays for weekly backups
+    retention_monthly_count    = number       # Number of monthly backups to retain
+    retention_monthly_weeks    = list(string) # List of weeks for monthly backups
+    retention_monthly_weekdays = list(string) # List of weekdays for monthly backups
+    retention_yearly_count     = number       # Number of yearly backups to retain
+    retention_yearly_weekdays  = list(string) # List of weekdays for yearly backups
+    retention_yearly_weeks     = list(string) # List of weeks for yearly backups
+    retention_yearly_months    = list(string) # List of months for yearly backups
   })
 }
 
+# Object variable to define the storage account details
 variable "storage_account" {
-  description = "Storage Account (Optional)"
   type = object({
-    name                     = string # Storage Account Name (Required)
-    location                 = string # Storage Account Location (Optional, defaults to resource_group.location)
-    access_tier              = string # Access Tier (Required)
-    account_tier             = string # Account Tier (Required)
-    account_replication_type = string # Account Replication Type (Required)
+    name                     = string # Name of the storage account
+    location                 = string # Location of the storage account
+    access_tier              = string # Access tier of the storage account (e.g., Hot, Cool)
+    account_tier             = string # Account tier of the storage account (e.g., Standard, Premium)
+    account_replication_type = string # Replication type of the storage account (e.g., LRS, GRS)
   })
 }
 
+# Object variable to define the recovery services vault private endpoint details
 variable "recovery_services_vault_pe" {
-  description = "Recovery Services Vault Private Endpoint (Optional)"
   type = object({
-    name      = string # Private Endpoint Name (Required)
-    location  = string # Private Endpoint Location (Optional, defaults to resource_group.location)
-    subnet_id = string # Subnet ID (Required)
+    name      = string # Name of the private endpoint
+    location  = string # Location of the private endpoint
+    subnet_id = string # Subnet ID for the private endpoint
   })
 }
 
+# Object variable to define the storage account private endpoint details
 variable "storage_account_pe" {
-  description = "Storage Account Private Endpoint (Optional)"
   type = object({
-    name      = string # Private Endpoint Name (Required)
-    location  = string # Private Endpoint Location (Optional, defaults to resource_group.location)
-    subnet_id = string # Subnet ID (Required)
+    name      = string # Name of the private endpoint
+    location  = string # Location of the private endpoint
+    subnet_id = string # Subnet ID for the private endpoint
   })
 }
