@@ -55,6 +55,11 @@ resource "azurerm_backup_policy_vm" "vmbackuppolicy" {
     weeks    = var.backup_policy_vm.retention_yearly_weeks
     months   = var.backup_policy_vm.retention_yearly_months
   }
+  tiering_policy {
+    archived_restore_point {
+      mode = "TierRecommended"
+    }
+  }
 }
 
 
