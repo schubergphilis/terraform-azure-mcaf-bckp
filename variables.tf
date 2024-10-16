@@ -14,18 +14,10 @@ variable "resource_group" {
 variable "azurerm_recovery_services_vault" {
   description = "Recovery Services Vault (Optional)"
   type = object({
-    name                          = string # Vault Name (Required)
-    location                      = string # Vault Location (Optional, defaults to resource_group.location)
-    sku                           = string # SKU (Optional, defaults to 'standard')
-    soft_delete_enabled           = bool   # Soft Delete Enabled (Optional, defaults to true)
-    public_network_access_enabled = bool   # Public Network Access Enabled (Optional, defaults to false)
+    name     = string # Vault Name (Required)
+    location = string # Vault Location (Optional, defaults to resource_group.location)
+    sku      = string # SKU (Optional, defaults to 'standard')
   })
-  default = {
-    location                      = var.resource_group.location
-    sku                           = "standard"
-    soft_delete_enabled           = true
-    public_network_access_enabled = false
-  }
 }
 
 variable "backup_policy_vm" {
@@ -46,19 +38,12 @@ variable "backup_policy_vm" {
 variable "storage_account" {
   description = "Storage Account (Optional)"
   type = object({
-    name                          = string # Storage Account Name (Required)
-    location                      = string # Storage Account Location (Optional, defaults to resource_group.location)
-    access_tier                   = string # Access Tier (Required)
-    account_tier                  = string # Account Tier (Required)
-    account_replication_type      = string # Account Replication Type (Required)
-    min_tls_version               = string # Minimum TLS Version (Optional, defaults to '1.2')
-    public_network_access_enabled = bool   # Public Network Access Enabled (Optional, defaults to false)
+    name                     = string # Storage Account Name (Required)
+    location                 = string # Storage Account Location (Optional, defaults to resource_group.location)
+    access_tier              = string # Access Tier (Required)
+    account_tier             = string # Account Tier (Required)
+    account_replication_type = string # Account Replication Type (Required)
   })
-  default = {
-    location                      = var.resource_group.location
-    min_tls_version               = "1.2"
-    public_network_access_enabled = false
-  }
 }
 
 variable "recovery_services_vault_pe" {
@@ -68,9 +53,6 @@ variable "recovery_services_vault_pe" {
     location  = string # Private Endpoint Location (Optional, defaults to resource_group.location)
     subnet_id = string # Subnet ID (Required)
   })
-  default = {
-    location = var.resource_group.location
-  }
 }
 
 variable "storage_account_pe" {
@@ -80,7 +62,4 @@ variable "storage_account_pe" {
     location  = string # Private Endpoint Location (Optional, defaults to resource_group.location)
     subnet_id = string # Subnet ID (Required)
   })
-  default = {
-    location = var.resource_group.location
-  }
 }
