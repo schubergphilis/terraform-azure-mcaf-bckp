@@ -1,6 +1,7 @@
 # Boolean variable to determine if the backup policy for VMs should be deployed
 variable "deploy_backup_policy_vm" {
   type = bool
+  default = false
 }
 
 # Object variable to define the resource group details
