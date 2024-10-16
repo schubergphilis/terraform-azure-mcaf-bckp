@@ -10,7 +10,6 @@ resource "azurerm_recovery_services_vault" "vault" {
   sku                           = var.vault.sku
   soft_delete_enabled           = var.vault.soft_delete_enabled
   public_network_access_enabled = var.vault.public_network_access_enabled
-  purge_protection_enabled      = var.vault.purge_protection_enabled
 }
 
 resource "azurerm_storage_account" "sa" {
