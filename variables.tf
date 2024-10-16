@@ -16,12 +16,12 @@ variable "azurerm_recovery_services_vault" {
     public_network_access_enabled = bool
   })
   default = {
+    location                      = var.resource_group.location
     sku                           = "standard"
     soft_delete_enabled           = true
     public_network_access_enabled = false
   }
 }
-
 
 variable "storage_account" {
   description = "Storage Account"
@@ -35,6 +35,7 @@ variable "storage_account" {
     public_network_access_enabled = bool
   })
   default = {
+    location                      = var.resource_group.location
     min_tls_version               = "1.2"
     public_network_access_enabled = false
   }
@@ -47,7 +48,9 @@ variable "recovery_services_vault_pe" {
     location  = string
     subnet_id = string
   })
-
+  default = {
+    location  = var.resource_group.location
+  }
 }
 
 variable "storage_account_pe" {
@@ -57,4 +60,7 @@ variable "storage_account_pe" {
     location  = string
     subnet_id = string
   })
+  default = {
+    location  = var.resource_group.location
+  }
 }
