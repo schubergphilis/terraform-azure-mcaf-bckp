@@ -1,3 +1,8 @@
+variable "deploy_backup_policy_vm" {
+  description = "Deploy Backup Policy VM (Required)"
+  type        = bool # Set to true (Deploy) or false (don't deploy) (Required)
+}
+
 variable "resource_group" {
   description = "Resource Group (Required)"
   type = object({
@@ -21,11 +26,6 @@ variable "azurerm_recovery_services_vault" {
     soft_delete_enabled           = true
     public_network_access_enabled = false
   }
-}
-
-variable "deploy_backup_policy_vm" {
-  description = "Deploy Backup Policy VM (Required)"
-  type        = bool # Deploy Backup Policy VM (Required)
 }
 
 variable "backup_policy_vm" {
