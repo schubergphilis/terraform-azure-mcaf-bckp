@@ -8,7 +8,7 @@ variable "deploy_backup_policy_vm" {
 variable "resource_group" {
   type = object({
     name     = string # Name of the resource group
-    location = string # Location of the resource group
+    location = string # Location of the resource group 
   })
 }
 
@@ -16,7 +16,7 @@ variable "resource_group" {
 variable "vault" {
   type = object({
     name     = string # Name of the vault
-    location = string # Location of the vault
+    location = string # Location of the vault - Unless specified, it will be the same as the resource group location
     sku      = string # SKU (pricing tier) of the vault
   })
 }
@@ -43,7 +43,7 @@ variable "backup_policy_vm" {
 variable "storage_account" {
   type = object({
     name                     = string # Name of the storage account
-    location                 = string # Location of the storage account
+    location                 = string # Location of the storage account - Unless specified, it will be the same as the resource group location
     access_tier              = string # Access tier of the storage account (e.g., Hot, Cool)
     account_tier             = string # Account tier of the storage account (e.g., Standard, Premium)
     account_replication_type = string # Replication type of the storage account (e.g., LRS, GRS)
@@ -54,7 +54,7 @@ variable "storage_account" {
 variable "recovery_services_vault_pe" {
   type = object({
     name      = string # Name of the private endpoint
-    location  = string # Location of the private endpoint
+    location  = string # Location of the private endpoint - Unless specified, it will be the same as the vault location
     subnet_id = string # Subnet ID for the private endpoint
   })
 }
@@ -63,7 +63,7 @@ variable "recovery_services_vault_pe" {
 variable "storage_account_pe" {
   type = object({
     name      = string # Name of the private endpoint
-    location  = string # Location of the private endpoint
+    location  = string # Location of the private endpoint - Unless specified, it will be the same as the storage account location
     subnet_id = string # Subnet ID for the private endpoint
   })
 }
